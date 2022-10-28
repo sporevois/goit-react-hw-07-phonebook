@@ -1,44 +1,18 @@
-import styles from '../ContactList/ContactList.module.css';
-import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { getFilter } from 'redux/selectors';
+import { useSelector } from 'react-redux';
+import { useFetchContactsQuery } from 'redux/contacts/contactsSlice';
+import { getFilteredContacts } from 'redux/contacts/contactsOperation';
+import ContactItem from 'components/ContactItem/ContactItem';
 
 const ContatList = () => {
-  const { contacts } = useSelector(getContacts);
+  const { data: contacts } = useFetchContactsQuery();
   const filter = useSelector(getFilter);
-  const dispatch = useDispatch();
-
-  const onDeleteContact = id => {
-    const action = deleteContact(id);
-    dispatch(action);
-  };
-
-  const getFilteredContacts = () => {
-    if (!filter) {
-      return contacts;
-    }
-    const normalizedFilter = filter.toLowerCase();
-    const filteredContacts = contacts.filter(contact => {
-      const normalizedName = contact.name.toLowerCase();
-      const result = normalizedName.includes(normalizedFilter);
-      return result;
-    });
-    return filteredContacts;
-  };
+  const filteredContacts = getFilteredContacts(contacts, filter);
 
   return (
     <ul>
-      {getFilteredContacts().map(({ id, name, number }) => (
-        <li key={id} className={styles.item}>
-          {name}: {number}
-          <button
-            className={styles.btn}
-            type="button"
-            onClick={() => onDeleteContact(id)}
-          >
-            Delete
-          </button>
-        </li>
+      {filteredContacts?.map(({ id, name, number }) => (
+        <ContactItem key={id} name={name} number={number} id={id} />
       ))}
     </ul>
   );

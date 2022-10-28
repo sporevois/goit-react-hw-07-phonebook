@@ -1,4 +1,4 @@
-.btn{
+.btn {
     display: inline-block;
     cursor: pointer;
     border: 1px solid black;
@@ -10,18 +10,18 @@
     font-size: 12px;
 }
 
-.btn:hover{
+.btn:hover {
     border-color: red;
     color: red;
     scale: 1.05;
     transition: 250ms;
 }
 
-.btn:active{
+.btn:active {
     background-color: red;
     color: white;
 }
 
-.item{
+.item {
     margin-bottom: 10px;
 }
