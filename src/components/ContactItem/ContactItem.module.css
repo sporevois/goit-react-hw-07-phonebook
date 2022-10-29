@@ -3,7 +3,6 @@
     cursor: pointer;
     border: 1px solid black;
     border-radius: 5px;
-    color: black;
     margin-left: 20px;
     padding: 5px 15px;
     background-color: #fff;
@@ -11,15 +10,9 @@
 }
 
 .btn:hover {
-    border-color: red;
-    color: red;
+    border-color: red;   
     scale: 1.05;
     transition: 250ms;
-}
-
-.btn:active {
-    background-color: red;
-    color: white;
 }
 
 .item {

@@ -3,13 +3,14 @@ import {
   useAddContactMutation,
   useFetchContactsQuery,
 } from 'redux/contacts/contactsSlice';
-import { isDublicate } from 'redux/contacts/contactsOperation';
+import { isDublicate } from 'redux/contacts/contactsTools';
+import { LoaderRotatingLines } from 'components/Loader/Loader';
 import styles from '../FormAddContact/FormAddContact.module.css';
 
 const FormAddContact = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [addContact, { isFetching, error }] = useAddContactMutation();
+  const [addContact, { isLoading, error }] = useAddContactMutation();
   const { data: contacts } = useFetchContactsQuery();
 
   const handleSubmit = async event => {
@@ -62,9 +63,17 @@ const FormAddContact = () => {
           onChange={handleChange}
         />
       </label>
-      <button className={styles.btn} type="submit">
-        Add contact
+      <button className={styles.btn} type="submit" disabled={isLoading}>
+        {isLoading ? (
+          <span>
+            Adding...
+            <LoaderRotatingLines />
+          </span>
+        ) : (
+          'Add contact'
+        )}
       </button>
+      {error && <b>Request failed with Error code {error.originalStatus}</b>}
     </form>
   );
 };

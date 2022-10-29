@@ -12,7 +12,7 @@ export const getFilteredContacts = (contacts, filter) => {
 };
   
 export const isDublicate = (name, contacts) => {
-     return contacts.find(
+     return contacts?.find(
       contact => contact.name.toLocaleLowerCase() === name.toLocaleLowerCase()
     );
 }
